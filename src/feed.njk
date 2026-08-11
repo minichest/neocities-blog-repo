@@ -1,0 +1,33 @@
+---
+permalink: /feed.xml
+eleventyExcludeFromCollections: true
+metadata:
+  title: "ice cap zone"
+  subtitle: "supersonic stories from pre genesis to post genesis wave"
+  language: "en"
+  url: "https://rifabutin.neocities.org/ice-cap-zone/"
+  author:
+    name: "edi"
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://w3.org" xml:lang="{{ metadata.language }}">
+  <title>{{ metadata.title }}</title>
+  <subtitle>{{ metadata.subtitle }}</subtitle>
+  <link href="{{ metadata.url }}feed.xml" rel="self"/>
+  <link href="{{ metadata.url }}"/>
+  <updated>{{ collections.posts | getNewestCollectionItemDate | dateToRfc3339 }}</updated>
+  <id>{{ metadata.url }}</id>
+  <author>
+    <name>{{ metadata.author.name }}</name>
+  </author>
+  {%- for post in collections.posts | reverse %}
+  {%- set absolutePostUrl %}{{ post.url | htmlBaseUrl(metadata.url) }}{% endset %}
+  <entry>
+    <title>{{ post.data.title }}</title>
+    <link href="{{ absolutePostUrl }}"/>
+    <updated>{{ post.date | dateToRfc3339 }}</updated>
+    <id>{{ absolutePostUrl }}</id>
+    <content type="html">{{ post.content | renderTransforms(post.data.page, metadata.url) }}</content>
+  </entry>
+  {%- endfor %}
+</feed>
