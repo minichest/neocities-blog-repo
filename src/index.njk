@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog Repo Dashboard</title>
+  <!-- Link Bulma CSS Framework -->
+  <link rel="stylesheet" href="https://jsdelivr.net">
+  <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css"
+>
+</head>
+<body class="has-background-light" style="min-height: 100vh;">
+
+  <!-- Simple Navigation Bar -->
+  <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item title is-5 has-text-white mb-0" href="/">
+        📊 Data Sandbox
+      </a>
+    </div>
+  </nav>
+
+  <!-- Main Grid Content Area -->
+  <section class="section">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          
+          <!-- Welcome Message Card -->
+          <div class="box">
+            <h1 class="title is-3 has-text-primary">Blog Raw Feed</h1>
+            <p class="subtitle is-5">Use this local dashboard to bounce, review, and test your dataset schemas.</p>
+          </div>
+
+          <!-- Automated Posts Data Loop -->
+          <div class="box">
+            <h2 class="title is-4 mb-4">Current Entry Nodes</h2>
+            
+            {%- for post in collections.posts | reverse -%}
+              <article class="media p-3 my-2" style="border-left: 4px solid #00d1b2; background-color: #fafafa;">
+                <div class="media-content">
+                  <div class="content">
+                    <p>
+                      <strong><a class="has-text-link" href="{{ post.url }}">{{ post.data.title }}</a></strong> 
+                      <br>
+                      <small class="has-text-grey">File Node: {{ post.filePathStem }} | Date: {{ post.date | dateFilter }}</small>
+                    </p>
+                  </div>
+                </div>
+              </article>
+            {%- else -%}
+              <div class="notification is-warning">
+                No post nodes found yet! Make sure your Markdown files have <code>tags: posts</code> inside their headers.
+              </div>
+            {%- endfor -%}
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

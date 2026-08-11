@@ -1,0 +1,34 @@
+name: Deploy Posts to Ice Cap Zone
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Set up Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22
+
+    # Compiles markdown text into clean HTML inside your local "public" folder
+    - name: Build Blog Posts
+      run: |
+        npm install
+        npm run build
+
+    # Push ONLY the compiled HTML files into the specific /ice-cap-zone folder on Neocities
+    - name: Deploy directly to target subfolder
+      uses: bcomnes/deploy-to-neocities-action@v2
+      with:
+        api_token: ${{ secrets.NEOCITIES_API_TOKEN }}
+        cleanup: false
+        dist_dir: public
+        neocities_dest_dir: ice-cap-zone # This maps 'public' straight to 'yourname.neocities.org/ice-cap-zone/'
