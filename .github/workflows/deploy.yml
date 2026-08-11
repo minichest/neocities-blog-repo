@@ -25,10 +25,11 @@ jobs:
         npm run build
 
     # Push ONLY the compiled HTML files into the specific /ice-cap-zone folder on Neocities
-    - name: Deploy directly to target subfolder
-      uses: bcomnes/deploy-to-neocities-action@v2
+    - name: Deploy directly to target subfolder using jonchang
+      uses: jonchang/neocities-action@v2
       with:
         api_token: ${{ secrets.NEOCITIES_API_TOKEN }}
-        cleanup: false
-        dist_dir: public
-        neocities_dest_dir: ice-cap-zone # This maps 'public' straight to 'yourname.neocities.org/ice-cap-zone/'
+        # The local directory containing your compiled HTML files
+        src: public
+        # The specific directory on your Neocities site to push files into
+        dest: ice-cap-zone
