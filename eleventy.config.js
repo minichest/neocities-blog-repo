@@ -8,13 +8,13 @@ module.exports = function(eleventyCc) {
     });
   });
 
-  return {
-    // Sets the base prefix path for all generated URLs
+    return {
     pathPrefix: "/ice-cap-zone/",
     dir: {
       input: "src",
       includes: "_includes",
-      output: "public"
+      // Builds files directly inside a subfolder block
+      output: "public/ice-cap-zone" 
     }
   };
 };

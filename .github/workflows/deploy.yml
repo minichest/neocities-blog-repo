@@ -25,11 +25,12 @@ jobs:
         npm run build
 
     # Push ONLY the compiled HTML files into the specific /ice-cap-zone folder on Neocities
-    - name: Deploy directly to target subfolder using jonchang
+    - name: Deploy to Neocities using jonchang action
       uses: jonchang/deploy-neocities@master
       with:
-        api_token: ${{ secrets.NEOCITIES_API_TOKEN }}
-        # The local directory containing your compiled HTML files
-        src: public
-        # The specific directory on your Neocities site to push files into
-        dest: ice-cap-zone
+        # Crucial: This action uses 'key' instead of api_token
+        key: ${{ secrets.NEOCITIES_API_TOKEN }}
+        # Crucial: This action uses 'dir' to find your build folder
+        dir: public
+        # Prevents the script from deleting files already sitting inside Neocities
+        clean: false
