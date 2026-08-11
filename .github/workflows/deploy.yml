@@ -26,7 +26,7 @@ jobs:
 
     # Push ONLY the compiled HTML files into the specific /ice-cap-zone folder on Neocities
     - name: Deploy directly to target subfolder using jonchang
-      uses: jonchang/neocities-action@v2
+      uses: jonchang/deploy-neocities@master
       with:
         api_token: ${{ secrets.NEOCITIES_API_TOKEN }}
         # The local directory containing your compiled HTML files
