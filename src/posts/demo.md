@@ -1,7 +1,8 @@
 ---
 layout: layout.njk
-title: Demo
+title: Welcome to My New Blog Setup
 date: 2026-08-11
+summary: This is my very first official entry! I am writing this post entirely in standard Markdown text inside my isolated repository space.
 tags: posts
 permalink: "/{{ page.fileSlug }}.html"
 ---

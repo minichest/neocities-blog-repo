@@ -27,7 +27,11 @@ metadata:
     <link href="{{ absolutePostUrl }}"/>
     <updated>{{ post.date | dateToRfc3339 }}</updated>
     <id>{{ absolutePostUrl }}</id>
-    <content type="html">{{ post.content | renderTransforms(post.data.page, metadata.url) }}</content>
+    
+    <!-- FIXED: Added explicit summary node using the custom front matter / tag excerpt filter -->
+    <summary type="html">{{ post | excerpt | xmlEscape }}</summary>
+    
+    <content type="html">{{ post.content | renderTransforms(post.data.page, metadata.url) | xmlEscape }}</content>
   </entry>
   {%- endfor %}
 </feed>
