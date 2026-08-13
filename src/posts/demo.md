@@ -7,7 +7,7 @@ tags: posts
 permalink: "/{{ page.fileSlug }}.html"
 ---
 
-# Welcome to My New Blog Setup
+# Demo
 
 This is my very first official entry! I am writing this post entirely in standard **Markdown text** inside my isolated repository space.
 
