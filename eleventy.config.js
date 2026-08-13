@@ -14,9 +14,9 @@ module.exports = async function(eleventyCc) {
     });
   });
 
-  // UPDATED: Excerpt filter that checks Front Matter variables first
+  // UPDATED: Excerpt filter that isolates just the pure text sentence
   eleventyCc.addFilter("excerpt", (post) => {
-    // 1. Check if a summary property exists inside the front matter metadata block
+    // 1. Check if an explicit summary property exists inside the front matter metadata block
     if (post.data && post.data.summary) {
       return post.data.summary;
     }
@@ -24,13 +24,20 @@ module.exports = async function(eleventyCc) {
     const content = post.templateContent;
     if (!content) return "";
     
-    // 2. Fallback: Check for the <!-- more --> divider comment tag inside the body
+    // 2. Extract content before <!-- more --> marker
+    let rawSegment = content;
     if (content.includes("<!-- more -->")) {
-      return content.split("<!-- more -->")[0]; // Grabs everything before the comment split
+      rawSegment = content.split("<!-- more -->")[0];
     }
     
-    // 3. Fallback: Strip HTML tags and take the first 200 characters from the text stream
-    return content.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 200).trim() + "...";
+    // 3. FIXED: Clean up the segment by stripping headers, HTML tags, and duplicate title nodes
+    const cleanSummary = rawSegment
+      .replace(/<h[1-6][^>]*>.*?<\/h[1-6]>/gi, "") // Deletes any inner header tags
+      .replace(/<\/?[^>]+(>|$)/g, "")               // Strips out all remaining HTML syntax brackets
+      .trim();
+
+    // Return the clean excerpt limited to a friendly length
+    return cleanSummary.substring(0, 180).trim() + "...";
   });
 
   return {
