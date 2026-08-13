@@ -20,18 +20,19 @@ metadata:
   <author>
     <name>{{ metadata.author.name }}</name>
   </author>
-    {%- for post in collections.posts | reverse %}
-      {%- set absolutePostUrl %}{{ post.url | htmlBaseUrl(metadata.url) }}{% endset %}
-      <entry>
-        <title>{{ post.data.title }}</title>
-        <link href="{{ absolutePostUrl }}"/>
-        <updated>{{ post.date | dateToRfc3339 }}</updated>
-        <id>{{ absolutePostUrl }}</id>
-        
-        <!-- FIXED: Using htmlToRssData plugin helper instead -->
-        <summary type="html">{{ post | excerpt | htmlToRssData }}</summary>
-        
-        <content type="html">{{ post.content | renderTransforms(post.data.page, metadata.url) | htmlToRssData }}</content>
-      </entry>
-    {%- endfor %}
+  {%- for post in collections.posts | reverse %}
+  {%- set absolutePostUrl %}{{ post.url | htmlBaseUrl(metadata.url) }}{% endset %}
+  <entry>
+    <title>{{ post.data.title }}</title>
+    <link href="{{ absolutePostUrl }}"/>
+    <updated>{{ post.date | dateToRfc3339 }}</updated>
+    <id>{{ absolutePostUrl }}</id>
+    
+    <!-- FIXED: Using native Nunjucks escape filter for the front matter excerpt summary -->
+    <summary type="html">{{ post | excerpt | escape }}</summary>
+    
+    <!-- FIXED: Using standard htmlToAbsoluteUrls RSS plugin filter -->
+    <content type="html">{{ post.content | renderTransforms(post.data.page, metadata.url) | htmlToAbsoluteUrls(absolutePostUrl) | escape }}</content>
+  </entry>
+  {%- endfor %}
 </feed>
