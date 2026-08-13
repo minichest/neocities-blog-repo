@@ -5,16 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ title }}</title>
   
-  <!-- Points flawlessly to your central Neocities asset directory -->
-  <link rel="stylesheet" href="/res/css/ice-cap-post.css">
+  <!-- FIXED: Load Bulma FIRST so your custom CSS can override it safely -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+  <link rel="stylesheet" href="/res/css/ice-cap-post.css">
 </head>
-<!-- Applying your custom 'post-page' body hook class from your CSS file -->
 <body class="post-page">
 
-  <!-- Main container wrapper for your markdown text -->
-  <main class="ice-cap-container">
-    {{ content | safe }}
+  <main class="section py-5 ice-cap-container">
+    <div class="container">
+      
+      <!-- FIXED: Added white container card layout wrapper class -->
+      <div class="p-5 p-6-tablet post-panel-box">
+        
+        <!-- FIXED: Added post-content text hook class for your custom markdown styling -->
+        <article class="content post-content">
+          {{ content | safe }}
+        </article>
+
+      </div>
+
+    </div>
   </main>
 </body>
 </html>
